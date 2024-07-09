@@ -81,11 +81,6 @@ public final class AsyncStorageModule
   }
 
   @Override
-  public void onCatalystInstanceDestroy() {
-    mShuttingDown = true;
-  }
-
-  @Override
   public void clearSensitiveData() {
     // Clear local storage. If fails, crash, since the app is potentially in a bad state and could
     // cause a privacy violation. We're still not recovering from this well, but at least the error
@@ -102,6 +97,7 @@ public final class AsyncStorageModule
   @Override
   public void onHostDestroy() {
     // ensure we close database when activity is destroyed
+    mShuttingDown = true;
     mReactDatabaseSupplier.closeDatabase();
   }
 
